@@ -1,0 +1,8 @@
+NAME="ZachOS"
+PRETTY_NAME="ZachOS - Arch Linux"
+ID=zachos
+ID_LIKE=arch
+BUILD_ID=rolling
+ANSI_COLOR="38;2;255;103;31"
+HOME_URL="https://github.com/Alec-crypto-cmd/ZachOS"
+DOCUMENTATION_URL="https://github.com/Alec-crypto-cmd/ZachOS"
