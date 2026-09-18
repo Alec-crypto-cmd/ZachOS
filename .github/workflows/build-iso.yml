@@ -10,17 +10,31 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     container: archlinux:latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install archiso
-        run: pacman -Sy --noconfirm --needed archiso git
+        shell: bash
+        run: |
+          set -euxo pipefail
+          pacman -Syu --noconfirm --needed archiso git
+
+      - name: Validate profile
+        shell: bash
+        run: |
+          set -euxo pipefail
+          bash -n profiledef.sh
+          test -f pacman.conf
+          test -s packages.x86_64
 
       - name: Build ISO
-        run: mkarchiso -v -w /tmp/zachos-work -o /tmp/zachos-out .
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkarchiso -v -w /tmp/zachos-work -o /tmp/zachos-out .
 
       - name: Upload ISO artifact
         uses: actions/upload-artifact@v4
