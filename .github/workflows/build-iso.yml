@@ -11,35 +11,30 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-24.04
-    container: archlinux:latest
     steps:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Install archiso
+      - name: Build ISO in privileged Arch container
         shell: bash
         run: |
           set -euxo pipefail
-          pacman -Syu --noconfirm --needed archiso git
-
-      - name: Validate profile
-        shell: bash
-        run: |
-          set -euxo pipefail
-          bash -n profiledef.sh
-          test -f pacman.conf
-          test -s packages.x86_64
-
-      - name: Build ISO
-        shell: bash
-        run: |
-          set -euxo pipefail
-          mkarchiso -v -w /tmp/zachos-work -o /tmp/zachos-out .
+          docker run --rm --privileged \
+            --volume "${GITHUB_WORKSPACE}:/workspace" \
+            --workdir /workspace \
+            archlinux:latest \
+            bash -euxo pipefail -c '
+              pacman -Syu --noconfirm --needed archiso git
+              bash -n profiledef.sh
+              test -f pacman.conf
+              test -s packages.x86_64
+              mkarchiso -v -w /tmp/zachos-work -o /workspace/out .
+            '
 
       - name: Upload ISO artifact
         uses: actions/upload-artifact@v4
         with:
           name: zachos-iso
-          path: /tmp/zachos-out/*.iso
+          path: out/*.iso
           if-no-files-found: error
           retention-days: 14
