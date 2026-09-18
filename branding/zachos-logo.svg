@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 220">
+  <rect width="800" height="220" rx="24" fill="#17191d"/>
+  <path d="M78 56h142l-94 108h98" fill="none" stroke="#ff6724" stroke-width="22" stroke-linejoin="round"/>
+  <text x="270" y="142" fill="#f5f7fa" font-family="sans-serif" font-size="78" font-weight="700">ZachOS</text>
+</svg>
