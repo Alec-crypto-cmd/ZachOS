@@ -9,6 +9,7 @@ systemctl enable firewalld.service
 
 install -d -m 0755 /etc/pacman.d/hooks
 install -d -m 0755 /etc/skel/.config
+install -d -m 0755 /usr/share/wallpapers/ZachOS
 
 cat > /etc/profile.d/zachos-branding.sh <<'EOF'
 export ZACHOS_EDITION="ZachOS"
