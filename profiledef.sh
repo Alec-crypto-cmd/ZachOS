@@ -9,6 +9,7 @@ install_dir="arch"
 buildmodes=("iso")
 bootmodes=("bios.syslinux" "uefi-x64.systemd-boot")
 arch="x86_64"
+pacman_conf="pacman.conf"
 airootfs_image_type="squashfs"
 
 file_permissions=(
