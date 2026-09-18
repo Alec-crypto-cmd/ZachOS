@@ -1,0 +1,31 @@
+name: Build ZachOS ISO
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install archiso
+        run: pacman -Sy --noconfirm --needed archiso git
+
+      - name: Build ISO
+        run: mkarchiso -v -w /tmp/zachos-work -o /tmp/zachos-out .
+
+      - name: Upload ISO artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: zachos-iso
+          path: /tmp/zachos-out/*.iso
+          if-no-files-found: error
+          retention-days: 14
