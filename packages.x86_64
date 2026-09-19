@@ -4,6 +4,8 @@ base-devel
 linux
 linux-firmware
 archiso
+mkinitcpio
+mkinitcpio-archiso
 archinstall
 btrfs-progs
 sudo
